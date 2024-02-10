@@ -11,6 +11,9 @@ struct CounterView: View {
 
 	@ObservedObject var state: AppState
 	@State private var isPrimeModalShown: Bool = false
+	@State private var isAlertNthPrimeShowm: Bool = false
+	@Environment(\.dismiss) var dismiss
+	@State private var alertNthPrime: Int?
 
 	var body: some View {
 		VStack {
@@ -37,7 +40,11 @@ struct CounterView: View {
 			})
 
 			Button(action: {
-				
+				nthPrime(state.count) { prime in
+					alertNthPrime = prime
+					print("isAlertNthPrimeShowm:", isAlertNthPrimeShowm)
+					isAlertNthPrimeShowm = true
+				}
 			}, label: {
 				Text("What is the \(ordinal(state.count)) prime?")
 			})
@@ -51,6 +58,21 @@ struct CounterView: View {
 				IsPrimeModelView(state: state)
 			}
 		)
+		.alert(
+			"Warning",
+			isPresented: $isAlertNthPrimeShowm,
+			actions: {
+				Button {
+					print(isAlertNthPrimeShowm)
+				} label: {
+					Text("Ok")
+				}
+			}
+		) {
+			Text(
+				"The \(ordinal(state.count)) prime is \(alertNthPrime ?? 0)"
+			)
+		}
 	}
 }
 

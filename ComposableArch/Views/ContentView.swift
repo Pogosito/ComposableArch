@@ -21,9 +21,9 @@ struct ContentView: View {
 				}
 
 				NavigationLink {
-					Text("Dome")
+					FavoritePrimesView(state: state)
 				} label: {
-					Text("Favorite promise")
+					Text("Favorite primes")
 				}
 			}
 		}
