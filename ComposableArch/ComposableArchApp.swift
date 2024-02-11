@@ -11,7 +11,12 @@ import SwiftUI
 struct ComposableArchApp: App {
 	var body: some Scene {
 		WindowGroup {
-			ContentView(state: .init())
+			ContentView(
+				store: Store(
+					initialValue: AppState(),
+					reducer: appReducer
+				)
+			)
 		}
 	}
 }

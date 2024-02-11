@@ -9,25 +9,25 @@ import SwiftUI
 
 struct CounterView: View {
 
-	@ObservedObject var state: AppState
+	@ObservedObject var store: Store<AppState, AppAction>
+
 	@State private var isPrimeModalShown: Bool = false
 	@State private var isAlertNthPrimeShowm: Bool = false
-	@Environment(\.dismiss) var dismiss
 	@State private var alertNthPrime: Int?
 
 	var body: some View {
 		VStack {
 			HStack {
 				Button(action: {
-					state.count -= 1
+					store.send(.counter(.decrTapped))
 				}, label: {
 					Text("-")
 				})
 
-				Text("\(state.count)")
+				Text("\(store.value.count)")
 
 				Button(action: {
-					state.count += 1
+					store.send(.counter(.incrTapped))
 				}, label: {
 					Text("+")
 				})
@@ -40,13 +40,13 @@ struct CounterView: View {
 			})
 
 			Button(action: {
-				nthPrime(state.count) { prime in
+				nthPrime(store.value.count) { prime in
 					alertNthPrime = prime
 					print("isAlertNthPrimeShowm:", isAlertNthPrimeShowm)
 					isAlertNthPrimeShowm = true
 				}
 			}, label: {
-				Text("What is the \(ordinal(state.count)) prime?")
+				Text("What is the \(ordinal(store.value.count)) prime?")
 			})
 		}
 		.font(.title)
@@ -55,7 +55,7 @@ struct CounterView: View {
 		.sheet(
 			isPresented: $isPrimeModalShown,
 			content: {
-				IsPrimeModelView(state: state)
+				IsPrimeModelView(store: store)
 			}
 		)
 		.alert(
@@ -70,7 +70,7 @@ struct CounterView: View {
 			}
 		) {
 			Text(
-				"The \(ordinal(state.count)) prime is \(alertNthPrime ?? 0)"
+				"The \(ordinal(store.value.count)) prime is \(alertNthPrime ?? 0)"
 			)
 		}
 	}
@@ -86,5 +86,10 @@ private extension CounterView {
 }
 
 #Preview {
-	CounterView(state: .init())
+	CounterView(
+		store: Store(
+			initialValue: AppState(),
+			reducer: appReducer
+		)
+	)
 }
