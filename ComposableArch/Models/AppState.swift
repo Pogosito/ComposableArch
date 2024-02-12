@@ -14,25 +14,37 @@ struct AppState {
 	var count = 0
 
 	var favoritePrimes: [Int] = []
-}
 
-// Мы не хотим, чтобы наш слой модели был зависим от фреймворков, поэтому в модели мы не используем обертки Combine
-// Но чтобы получить пользу от оберток Combine создаим вот такой дженерик класс
-// который может получить на вход любую модел и дейтсвие которое нужно осущетсвиить на моделью
-final class Store<Value, Action>: ObservableObject {
+	var activityFeed: [Activity] = []
 
-	private let reducer: (inout Value, Action) -> Void
-	@Published var value: Value
+	struct Activity {
 
-	init(
-		initialValue: Value,
-		reducer: @escaping (inout Value, Action) -> Void
-	) {
-		self.value = initialValue
-		self.reducer = reducer
+		let timestamp: Date
+
+		let type: ActivityType
 	}
 
-	func send(_ action: Action) {
-		reducer(&value, action)
+	enum ActivityType {
+
+		case addedFavoritePrime(Int)
+
+		case removedFavoritePrime(Int)
+	}
+}
+
+// Чтобы удобно изменять свойство в пулбэке через keyPath можно вот так вот в экстеншен вынести составное свойтсво
+extension AppState {
+
+	var favoritePrimeState: FavoritePrimesState {
+		get {
+			FavoritePrimesState(
+				favoritePrimes: favoritePrimes,
+				activityFeed: activityFeed
+			)
+		}
+		set {
+			favoritePrimes = newValue.favoritePrimes
+			activityFeed = newValue.activityFeed
+		}
 	}
 }

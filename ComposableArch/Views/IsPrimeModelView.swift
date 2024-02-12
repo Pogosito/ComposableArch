@@ -22,7 +22,9 @@ struct IsPrimeModelView: View {
 						Text("Remove from favorite primes")
 					}
 				} else {
-					Button(action: { store.send(.primeModal(.saveFavoritePrimeTapped)) }) {
+					Button(action: {
+						store.send(.primeModal(.saveFavoritePrimeTapped))
+					}) {
 						Text("Save to favorite primes")
 					}
 				}
