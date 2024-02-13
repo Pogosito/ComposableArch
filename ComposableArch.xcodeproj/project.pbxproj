@@ -14,6 +14,7 @@
 		5406E7BB2B7920F900394DF0 /* CounterAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5406E7BA2B7920F900394DF0 /* CounterAction.swift */; };
 		5406E7BD2B7A48E000394DF0 /* FavoritePrimesState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5406E7BC2B7A48E000394DF0 /* FavoritePrimesState.swift */; };
 		5406E7BF2B7A4DC700394DF0 /* Store.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5406E7BE2B7A4DC700394DF0 /* Store.swift */; };
+		5406E7C12B7BBB1800394DF0 /* HigherOrderReducers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5406E7C02B7BBB1800394DF0 /* HigherOrderReducers.swift */; };
 		548AA1FE2B754C8500BD4BBF /* ComposableArchApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 548AA1FD2B754C8500BD4BBF /* ComposableArchApp.swift */; };
 		548AA2002B754C8500BD4BBF /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 548AA1FF2B754C8500BD4BBF /* ContentView.swift */; };
 		548AA2022B754C8600BD4BBF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 548AA2012B754C8600BD4BBF /* Assets.xcassets */; };
@@ -31,6 +32,7 @@
 		5406E7BA2B7920F900394DF0 /* CounterAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CounterAction.swift; sourceTree = "<group>"; };
 		5406E7BC2B7A48E000394DF0 /* FavoritePrimesState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritePrimesState.swift; sourceTree = "<group>"; };
 		5406E7BE2B7A4DC700394DF0 /* Store.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Store.swift; sourceTree = "<group>"; };
+		5406E7C02B7BBB1800394DF0 /* HigherOrderReducers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HigherOrderReducers.swift; sourceTree = "<group>"; };
 		548AA1FA2B754C8500BD4BBF /* ComposableArch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ComposableArch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		548AA1FD2B754C8500BD4BBF /* ComposableArchApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposableArchApp.swift; sourceTree = "<group>"; };
 		548AA1FF2B754C8500BD4BBF /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -66,17 +68,16 @@
 				5406E7B22B7752D100394DF0 /* WolframAlphaResult.swift */,
 				548AA20D2B75521D00BD4BBF /* AppState.swift */,
 				5406E7BC2B7A48E000394DF0 /* FavoritePrimesState.swift */,
-				5406E7BE2B7A4DC700394DF0 /* Store.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
 		};
-		5406E7B62B79143600394DF0 /* Reducer */ = {
+		5406E7B62B79143600394DF0 /* Reducers */ = {
 			isa = PBXGroup;
 			children = (
 				5406E7B72B79144F00394DF0 /* AppReducer.swift */,
 			);
-			path = Reducer;
+			path = Reducers;
 			sourceTree = "<group>";
 		};
 		5406E7B92B7920EA00394DF0 /* Actions */ = {
@@ -85,6 +86,15 @@
 				5406E7BA2B7920F900394DF0 /* CounterAction.swift */,
 			);
 			path = Actions;
+			sourceTree = "<group>";
+		};
+		5406E7C52B7BC75600394DF0 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				5406E7BE2B7A4DC700394DF0 /* Store.swift */,
+				5406E7C02B7BBB1800394DF0 /* HigherOrderReducers.swift */,
+			);
+			path = Core;
 			sourceTree = "<group>";
 		};
 		548AA1F12B754C8500BD4BBF = {
@@ -107,9 +117,10 @@
 			isa = PBXGroup;
 			children = (
 				548AA1FD2B754C8500BD4BBF /* ComposableArchApp.swift */,
-				5406E7B92B7920EA00394DF0 /* Actions */,
-				5406E7B62B79143600394DF0 /* Reducer */,
+				5406E7C52B7BC75600394DF0 /* Core */,
 				5406E7AE2B77527400394DF0 /* Network */,
+				5406E7B92B7920EA00394DF0 /* Actions */,
+				5406E7B62B79143600394DF0 /* Reducers */,
 				5406E7B12B7752BB00394DF0 /* Models */,
 				548AA20F2B756A0200BD4BBF /* Views */,
 				548AA2012B754C8600BD4BBF /* Assets.xcassets */,
@@ -210,6 +221,7 @@
 				5406E7B32B7752D100394DF0 /* WolframAlphaResult.swift in Sources */,
 				548AA2002B754C8500BD4BBF /* ContentView.swift in Sources */,
 				548AA1FE2B754C8500BD4BBF /* ComposableArchApp.swift in Sources */,
+				5406E7C12B7BBB1800394DF0 /* HigherOrderReducers.swift in Sources */,
 				5406E7BF2B7A4DC700394DF0 /* Store.swift in Sources */,
 				5406E7B02B77528300394DF0 /* Queries.swift in Sources */,
 				5406E7BB2B7920F900394DF0 /* CounterAction.swift in Sources */,

@@ -7,9 +7,9 @@
 
 import Foundation
 
-struct FavoritePrimesState {
-
-	var favoritePrimes: [Int]
-
-	var activityFeed: [AppState.Activity]
-}
+//struct FavoritePrimesState {
+//
+//	var favoritePrimes: [Int]
+//
+//	var activityFeed: [AppState.Activity]
+//}

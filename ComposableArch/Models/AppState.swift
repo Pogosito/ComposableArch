@@ -29,22 +29,38 @@ struct AppState {
 		case addedFavoritePrime(Int)
 
 		case removedFavoritePrime(Int)
+
+		var addedFavoritePrime: Int? {
+			get {
+				guard case let .addedFavoritePrime(value) = self else {
+					return nil
+				}
+				return value
+			}
+			set {
+				guard case .addedFavoritePrime = self,
+					  let newValue = newValue else {
+					return
+				}
+				self = .addedFavoritePrime(newValue)
+			}
+		}
 	}
 }
 
 // Чтобы удобно изменять свойство в пулбэке через keyPath можно вот так вот в экстеншен вынести составное свойтсво
-extension AppState {
-
-	var favoritePrimeState: FavoritePrimesState {
-		get {
-			FavoritePrimesState(
-				favoritePrimes: favoritePrimes,
-				activityFeed: activityFeed
-			)
-		}
-		set {
-			favoritePrimes = newValue.favoritePrimes
-			activityFeed = newValue.activityFeed
-		}
-	}
-}
+//extension AppState {
+//
+//	var favoritePrimeState: FavoritePrimesState {
+//		get {
+//			FavoritePrimesState(
+//				favoritePrimes: favoritePrimes,
+//				activityFeed: activityFeed
+//			)
+//		}
+//		set {
+//			favoritePrimes = newValue.favoritePrimes
+//			activityFeed = newValue.activityFeed
+//		}
+//	}
+//}
