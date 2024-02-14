@@ -6,12 +6,25 @@
 //
 
 import Foundation
+import ComposableArchitecture
 
-var appReducer = combine(
+var appReducer: (inout AppState, AppAction) -> Void = combine(
 	// Мы берем толькл count
-	pullback(counterReducer, value: \.count),
-	primeModalReducer,
-	pullback(favoritePrimesReducer, value: \.favoritePrimes)
+//	pullback(
+//		counterReducer,
+//		value: \.count,
+//		action: \.counter
+//	)
+	pullback(
+		primeModalReducer,
+		value: \.self,
+		action: \.primeModal
+	),
+	pullback(
+		favoritePrimesReducer,
+		value: \.favoritePrimes,
+		action: \.favoritePrimes
+	)
 )
 
 // Мы не можем просто взять и поменять используемый тип у ридюсера, чтобы типы
@@ -42,10 +55,10 @@ func primeModalReducer(
 
 func favoritePrimesReducer(
 	state: inout [Int],
-	action: AppAction
+	action: FavoritePrimesActions
 ) {
 	switch action {
-	case let .favoritePrimes(.deleteFavoritePrimes(indexSet)):
+	case let .deleteFavoritePrimes(indexSet):
 		for index in indexSet {
 			state.remove(at: index)
 		}
