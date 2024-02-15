@@ -10,20 +10,10 @@
 // чтобы легче находить эти места и чтобы легче понимать что происходит в программе
 
 import Foundation
-
-enum CounterAction {
-	case decrTapped
-	case incrTapped
-}
-
-enum PrimeModalAction {
-	case saveFavoritePrimeTapped
-	case removeFavoritePrimeTapped
-}
-
-enum FavoritePrimesActions {
-	case deleteFavoritePrimes(IndexSet)
-}
+import Counter
+import PrimeModal
+import FavoritePrimes
+import ComposableArchitecture
 
 enum AppAction {
 
@@ -31,6 +21,8 @@ enum AppAction {
 	case primeModal(PrimeModalAction)
 	case favoritePrimes(FavoritePrimesActions)
 
+	// Таким образом мы получаем доступ к ассоциативным значениям enum
+	// через точку
 	var counter: CounterAction? {
 		get {
 			guard case let .counter(value) = self else { return nil }

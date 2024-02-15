@@ -11,9 +11,7 @@
 		5406E7B32B7752D100394DF0 /* WolframAlphaResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5406E7B22B7752D100394DF0 /* WolframAlphaResult.swift */; };
 		5406E7B52B77553A00394DF0 /* FavoritePrimesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5406E7B42B77553A00394DF0 /* FavoritePrimesView.swift */; };
 		5406E7B82B79144F00394DF0 /* AppReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5406E7B72B79144F00394DF0 /* AppReducer.swift */; };
-		5406E7BB2B7920F900394DF0 /* CounterAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5406E7BA2B7920F900394DF0 /* CounterAction.swift */; };
-		5406E7BD2B7A48E000394DF0 /* FavoritePrimesState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5406E7BC2B7A48E000394DF0 /* FavoritePrimesState.swift */; };
-		5406E7BF2B7A4DC700394DF0 /* Store.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5406E7BE2B7A4DC700394DF0 /* Store.swift */; };
+		5406E7BB2B7920F900394DF0 /* AppAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5406E7BA2B7920F900394DF0 /* AppAction.swift */; };
 		5406E7C12B7BBB1800394DF0 /* HigherOrderReducers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5406E7C02B7BBB1800394DF0 /* HigherOrderReducers.swift */; };
 		5406E7C82B7C9E7E00394DF0 /* DEFENITIONS.md in Resources */ = {isa = PBXBuildFile; fileRef = 5406E7C72B7C9E7E00394DF0 /* DEFENITIONS.md */; };
 		5406E7D22B7CA9B700394DF0 /* Counter.docc in Sources */ = {isa = PBXBuildFile; fileRef = 5406E7D12B7CA9B700394DF0 /* Counter.docc */; };
@@ -30,7 +28,6 @@
 		5406E8072B7CA9DC00394DF0 /* PrimeModal.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5406E7F12B7CA9DC00394DF0 /* PrimeModal.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		5406E8172B7CA9F100394DF0 /* FavoritePrimes.docc in Sources */ = {isa = PBXBuildFile; fileRef = 5406E8162B7CA9F100394DF0 /* FavoritePrimes.docc */; };
 		5406E81D2B7CA9F100394DF0 /* FavoritePrimes.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5406E8132B7CA9F100394DF0 /* FavoritePrimes.framework */; };
-		5406E8242B7CA9F100394DF0 /* FavoritePrimesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5406E8232B7CA9F100394DF0 /* FavoritePrimesTests.swift */; };
 		5406E8252B7CA9F100394DF0 /* FavoritePrimes.h in Headers */ = {isa = PBXBuildFile; fileRef = 5406E8152B7CA9F100394DF0 /* FavoritePrimes.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5406E8282B7CA9F100394DF0 /* FavoritePrimes.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5406E8132B7CA9F100394DF0 /* FavoritePrimes.framework */; };
 		5406E8292B7CA9F100394DF0 /* FavoritePrimes.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5406E8132B7CA9F100394DF0 /* FavoritePrimes.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -41,6 +38,10 @@
 		5406E84A2B7CAA4C00394DF0 /* ComposableArchitecture.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5406E8352B7CAA4C00394DF0 /* ComposableArchitecture.framework */; };
 		5406E84B2B7CAA4C00394DF0 /* ComposableArchitecture.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5406E8352B7CAA4C00394DF0 /* ComposableArchitecture.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		5406E8532B7CAA6000394DF0 /* ComposableArchitecture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5406E8522B7CAA6000394DF0 /* ComposableArchitecture.swift */; };
+		5406E8552B7E301E00394DF0 /* Counter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5406E8542B7E301E00394DF0 /* Counter.swift */; };
+		5406E8572B7E308300394DF0 /* PrimeModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5406E8562B7E308300394DF0 /* PrimeModal.swift */; };
+		5406E8592B7E315700394DF0 /* FavoritePrimes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5406E8582B7E315700394DF0 /* FavoritePrimes.swift */; };
+		5406E85B2B7E31CF00394DF0 /* FavoritePrimesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5406E8232B7CA9F100394DF0 /* FavoritePrimesTests.swift */; };
 		548AA1FE2B754C8500BD4BBF /* ComposableArchApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 548AA1FD2B754C8500BD4BBF /* ComposableArchApp.swift */; };
 		548AA2002B754C8500BD4BBF /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 548AA1FF2B754C8500BD4BBF /* ContentView.swift */; };
 		548AA2022B754C8600BD4BBF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 548AA2012B754C8600BD4BBF /* Assets.xcassets */; };
@@ -159,9 +160,7 @@
 		5406E7B22B7752D100394DF0 /* WolframAlphaResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WolframAlphaResult.swift; sourceTree = "<group>"; };
 		5406E7B42B77553A00394DF0 /* FavoritePrimesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritePrimesView.swift; sourceTree = "<group>"; };
 		5406E7B72B79144F00394DF0 /* AppReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppReducer.swift; sourceTree = "<group>"; };
-		5406E7BA2B7920F900394DF0 /* CounterAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CounterAction.swift; sourceTree = "<group>"; };
-		5406E7BC2B7A48E000394DF0 /* FavoritePrimesState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritePrimesState.swift; sourceTree = "<group>"; };
-		5406E7BE2B7A4DC700394DF0 /* Store.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Store.swift; sourceTree = "<group>"; };
+		5406E7BA2B7920F900394DF0 /* AppAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppAction.swift; sourceTree = "<group>"; };
 		5406E7C02B7BBB1800394DF0 /* HigherOrderReducers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HigherOrderReducers.swift; sourceTree = "<group>"; };
 		5406E7C72B7C9E7E00394DF0 /* DEFENITIONS.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = DEFENITIONS.md; sourceTree = "<group>"; };
 		5406E7CE2B7CA9B700394DF0 /* Counter.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Counter.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -185,6 +184,9 @@
 		5406E83E2B7CAA4C00394DF0 /* ComposableArchitectureTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ComposableArchitectureTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5406E8452B7CAA4C00394DF0 /* ComposableArchitectureTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposableArchitectureTests.swift; sourceTree = "<group>"; };
 		5406E8522B7CAA6000394DF0 /* ComposableArchitecture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposableArchitecture.swift; sourceTree = "<group>"; };
+		5406E8542B7E301E00394DF0 /* Counter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Counter.swift; sourceTree = "<group>"; };
+		5406E8562B7E308300394DF0 /* PrimeModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrimeModal.swift; sourceTree = "<group>"; };
+		5406E8582B7E315700394DF0 /* FavoritePrimes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritePrimes.swift; sourceTree = "<group>"; };
 		548AA1FA2B754C8500BD4BBF /* ComposableArch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ComposableArch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		548AA1FD2B754C8500BD4BBF /* ComposableArchApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposableArchApp.swift; sourceTree = "<group>"; };
 		548AA1FF2B754C8500BD4BBF /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -273,6 +275,7 @@
 		5406E7AE2B77527400394DF0 /* Network */ = {
 			isa = PBXGroup;
 			children = (
+				5406E7B22B7752D100394DF0 /* WolframAlphaResult.swift */,
 				5406E7AF2B77528300394DF0 /* Queries.swift */,
 			);
 			path = Network;
@@ -281,42 +284,16 @@
 		5406E7B12B7752BB00394DF0 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				5406E7B22B7752D100394DF0 /* WolframAlphaResult.swift */,
 				548AA20D2B75521D00BD4BBF /* AppState.swift */,
-				5406E7BC2B7A48E000394DF0 /* FavoritePrimesState.swift */,
 			);
 			path = Models;
-			sourceTree = "<group>";
-		};
-		5406E7B62B79143600394DF0 /* Reducers */ = {
-			isa = PBXGroup;
-			children = (
-				5406E7B72B79144F00394DF0 /* AppReducer.swift */,
-			);
-			path = Reducers;
-			sourceTree = "<group>";
-		};
-		5406E7B92B7920EA00394DF0 /* Actions */ = {
-			isa = PBXGroup;
-			children = (
-				5406E7BA2B7920F900394DF0 /* CounterAction.swift */,
-			);
-			path = Actions;
-			sourceTree = "<group>";
-		};
-		5406E7C52B7BC75600394DF0 /* Core */ = {
-			isa = PBXGroup;
-			children = (
-				5406E7BE2B7A4DC700394DF0 /* Store.swift */,
-				5406E7C02B7BBB1800394DF0 /* HigherOrderReducers.swift */,
-			);
-			path = Core;
 			sourceTree = "<group>";
 		};
 		5406E7CF2B7CA9B700394DF0 /* Counter */ = {
 			isa = PBXGroup;
 			children = (
 				5406E7D02B7CA9B700394DF0 /* Counter.h */,
+				5406E8542B7E301E00394DF0 /* Counter.swift */,
 				5406E7D12B7CA9B700394DF0 /* Counter.docc */,
 			);
 			path = Counter;
@@ -333,6 +310,7 @@
 		5406E7F22B7CA9DC00394DF0 /* PrimeModal */ = {
 			isa = PBXGroup;
 			children = (
+				5406E8562B7E308300394DF0 /* PrimeModal.swift */,
 				5406E7F32B7CA9DC00394DF0 /* PrimeModal.h */,
 				5406E7F42B7CA9DC00394DF0 /* PrimeModal.docc */,
 			);
@@ -350,6 +328,7 @@
 		5406E8142B7CA9F100394DF0 /* FavoritePrimes */ = {
 			isa = PBXGroup;
 			children = (
+				5406E8582B7E315700394DF0 /* FavoritePrimes.swift */,
 				5406E8152B7CA9F100394DF0 /* FavoritePrimes.h */,
 				5406E8162B7CA9F100394DF0 /* FavoritePrimes.docc */,
 			);
@@ -367,9 +346,9 @@
 		5406E8362B7CAA4C00394DF0 /* ComposableArchitecture */ = {
 			isa = PBXGroup;
 			children = (
+				5406E8522B7CAA6000394DF0 /* ComposableArchitecture.swift */,
 				5406E8372B7CAA4C00394DF0 /* ComposableArchitecture.h */,
 				5406E8382B7CAA4C00394DF0 /* ComposableArchitecture.docc */,
-				5406E8522B7CAA6000394DF0 /* ComposableArchitecture.swift */,
 			);
 			path = ComposableArchitecture;
 			sourceTree = "<group>";
@@ -419,10 +398,10 @@
 			isa = PBXGroup;
 			children = (
 				548AA1FD2B754C8500BD4BBF /* ComposableArchApp.swift */,
-				5406E7C52B7BC75600394DF0 /* Core */,
+				5406E7BA2B7920F900394DF0 /* AppAction.swift */,
+				5406E7C02B7BBB1800394DF0 /* HigherOrderReducers.swift */,
+				5406E7B72B79144F00394DF0 /* AppReducer.swift */,
 				5406E7AE2B77527400394DF0 /* Network */,
-				5406E7B92B7920EA00394DF0 /* Actions */,
-				5406E7B62B79143600394DF0 /* Reducers */,
 				5406E7B12B7752BB00394DF0 /* Models */,
 				548AA20F2B756A0200BD4BBF /* Views */,
 				548AA2012B754C8600BD4BBF /* Assets.xcassets */,
@@ -801,6 +780,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5406E8552B7E301E00394DF0 /* Counter.swift in Sources */,
 				5406E7D22B7CA9B700394DF0 /* Counter.docc in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -818,6 +798,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5406E7F52B7CA9DC00394DF0 /* PrimeModal.docc in Sources */,
+				5406E8572B7E308300394DF0 /* PrimeModal.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -834,6 +815,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5406E8172B7CA9F100394DF0 /* FavoritePrimes.docc in Sources */,
+				5406E8592B7E315700394DF0 /* FavoritePrimes.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -841,7 +823,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5406E8242B7CA9F100394DF0 /* FavoritePrimesTests.swift in Sources */,
+				5406E85B2B7E31CF00394DF0 /* FavoritePrimesTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -870,14 +852,12 @@
 				548AA2002B754C8500BD4BBF /* ContentView.swift in Sources */,
 				548AA1FE2B754C8500BD4BBF /* ComposableArchApp.swift in Sources */,
 				5406E7C12B7BBB1800394DF0 /* HigherOrderReducers.swift in Sources */,
-				5406E7BF2B7A4DC700394DF0 /* Store.swift in Sources */,
 				5406E7B02B77528300394DF0 /* Queries.swift in Sources */,
-				5406E7BB2B7920F900394DF0 /* CounterAction.swift in Sources */,
+				5406E7BB2B7920F900394DF0 /* AppAction.swift in Sources */,
 				548AA2112B756A1800BD4BBF /* IsPrimeModelView.swift in Sources */,
 				5406E7B82B79144F00394DF0 /* AppReducer.swift in Sources */,
 				548AA20C2B754E9100BD4BBF /* CounterView.swift in Sources */,
 				5406E7B52B77553A00394DF0 /* FavoritePrimesView.swift in Sources */,
-				5406E7BD2B7A48E000394DF0 /* FavoritePrimesState.swift in Sources */,
 				548AA20E2B75521D00BD4BBF /* AppState.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

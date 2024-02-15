@@ -32,18 +32,30 @@ struct AppState {
 
 		var addedFavoritePrime: Int? {
 			get {
-				guard case let .addedFavoritePrime(value) = self else {
-					return nil
-				}
+				guard case let .addedFavoritePrime(value) = self else { return nil }
 				return value
 			}
 			set {
 				guard case .addedFavoritePrime = self,
-					  let newValue = newValue else {
-					return
-				}
+					  let newValue = newValue else { return }
 				self = .addedFavoritePrime(newValue)
 			}
+		}
+	}
+}
+
+extension AppState {
+
+	var primeModal: (count: Int, favoritePrimes: [Int]) {
+		get {
+			(
+				count: self.count,
+				favoritePrimes: self.favoritePrimes
+			)
+		}
+		set {
+			self.count = newValue.count
+			self.favoritePrimes = newValue.favoritePrimes
 		}
 	}
 }

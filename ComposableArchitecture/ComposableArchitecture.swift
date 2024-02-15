@@ -49,12 +49,12 @@ public func pullback<
 	LocalValue,
 	GlobalValue,
 	LocalAction,
-	GloabalAction
+	GlobalAction
 >(
 	_ reducer: @escaping (inout LocalValue, LocalAction) -> Void,
 	value: WritableKeyPath<GlobalValue, LocalValue>,
-	action: WritableKeyPath<GloabalAction, LocalAction?>
-) -> (inout GlobalValue, GloabalAction) -> Void {
+	action: WritableKeyPath<GlobalAction, LocalAction?>
+) -> (inout GlobalValue, GlobalAction) -> Void {
 	return { globalValue, globalAction in
 		guard let localAction = globalAction[keyPath: action] else { return }
 		reducer(
