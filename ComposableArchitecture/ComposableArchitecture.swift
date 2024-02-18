@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Combine
 
 // Мы не хотим, чтобы наш слой модели был зависим от фреймворков, поэтому в модели мы не используем обертки Combine
 // Но чтобы получить пользу от оберток Combine создаим вот такой дженерик класс
@@ -14,6 +15,7 @@ public final class Store<Value, Action>: ObservableObject {
 
 	private let reducer: (inout Value, Action) -> Void
 	@Published public private(set) var value: Value
+	private var cancellable: Cancellable?
 
 	public init(
 		initialValue: Value,
@@ -26,8 +28,23 @@ public final class Store<Value, Action>: ObservableObject {
 	public func send(_ action: Action) {
 		reducer(&value, action)
 	}
-}
 
+	public func view<LocalValue>(
+		_ f: @escaping (Value) -> LocalValue
+	) -> Store<LocalValue, Action> {
+		let localStore = Store<LocalValue, Action>(
+			initialValue: f(value)
+		) { localValue, action in
+			self.send(action)
+			localValue = f(self.value)
+		}
+		localStore.cancellable = $value.sink { [weak localStore] newValue in
+			localStore?.value = f(newValue)
+		}
+		return localStore
+	}
+}
+ 
 // Наш reducer будет большим если все засовывать в один метод,
 // поэтому сделаем вот такую функцию, чтобы можно
 // было разбить функцию reduce на кусочки

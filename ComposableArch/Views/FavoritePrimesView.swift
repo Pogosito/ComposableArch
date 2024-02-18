@@ -6,16 +6,17 @@
 //
 
 import SwiftUI
+import FavoritePrimes
 import ComposableArchitecture
 
 struct FavoritePrimesView: View {
 
-	@ObservedObject var store: Store<AppState, AppAction>
+	@ObservedObject var store: Store<[Int], AppAction>
 
 	var body: some View {
 		List {
 			ForEach(
-				store.value.favoritePrimes,
+				store.value,
 				id: \.self
 			) { prime in
 				Text("\(prime)")

@@ -10,7 +10,9 @@ import ComposableArchitecture
 
 struct CounterView: View {
 
-	@ObservedObject var store: Store<AppState, AppAction>
+	typealias CounterViewState = (count: Int, favoritePrimes: [Int])
+
+	@ObservedObject var store: Store<CounterViewState, AppAction>
 
 	@State private var isPrimeModalShown: Bool = false
 	@State private var isAlertNthPrimeShowm: Bool = false
