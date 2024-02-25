@@ -6,8 +6,9 @@
 //
 
 import SwiftUI
+import Counter
 
-// Почему использовать value семантику для состояния приложения лучше чем реф ? 
+// Почему использовать value семантику для состояния приложения лучше чем реф ?
 // Нашел интересное утверждение: Value SEMANTICS (not value types!) хочу понять в чем смысл
 struct AppState {
 
@@ -46,9 +47,9 @@ struct AppState {
 
 extension AppState {
 
-	var primeModal: (count: Int, favoritePrimes: [Int]) {
+	var counterView: CounterViewState {
 		get {
-			(
+			CounterViewState(
 				count: self.count,
 				favoritePrimes: self.favoritePrimes
 			)

@@ -9,6 +9,8 @@ import SwiftUI
 import ComposableArchitecture
 import PrimeModal
 
+public typealias CounterViewState = (count: Int, favoritePrimes: [Int])
+
 public enum CounterAction {
 	case decrTapped
 	case incrTapped
@@ -27,11 +29,40 @@ public func counterReducer(
 public enum CounterViewActions {
 	case counter(CounterAction)
 	case primeModal(PrimeModalAction)
+
+	var counter: CounterAction? {
+		get {
+			guard case let .counter(value) = self else { return nil }
+			return value
+		}
+		set {
+			guard case .counter = self,
+				  let newValue = newValue else { return }
+			self = .counter(newValue)
+		}
+	}
+
+	var primeModal: PrimeModalAction? {
+		get {
+			guard case let .primeModal(value) = self else { return nil }
+			return value
+		}
+		set {
+			guard case .primeModal = self,
+					let newValue = newValue else {
+				return
+			}
+			self = .primeModal(newValue)
+		}
+	}
 }
 
-public struct CounterView: View {
+public var counterViewReducer: (inout CounterViewState, CounterViewActions) -> Void = combine(
+	pullback(counterReducer, value: \.count, action: \.counter),
+	pullback(primeModalReducer, value: \.self, action: \.primeModal)
+)
 
-	public typealias CounterViewState = (count: Int, favoritePrimes: [Int])
+public struct CounterView: View {
 
 	@ObservedObject var store: Store<CounterViewState, CounterViewActions>
 

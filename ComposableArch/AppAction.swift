@@ -17,38 +17,11 @@ import ComposableArchitecture
 
 enum AppAction {
 
-	case counter(CounterAction)
-	case primeModal(PrimeModalAction)
+	case counterView(CounterViewActions)
 	case favoritePrimes(FavoritePrimesActions)
 
 	// Таким образом мы получаем доступ к ассоциативным значениям enum
 	// через точку
-	var counter: CounterAction? {
-		get {
-			guard case let .counter(value) = self else { return nil }
-			return value
-		}
-		set {
-			guard case .counter = self,
-				  let newValue = newValue else { return }
-			self = .counter(newValue)
-		}
-	}
-
-	var primeModal: PrimeModalAction? {
-		get {
-			guard case let .primeModal(value) = self else { return nil }
-			return value
-		}
-		set {
-			guard case .primeModal = self,
-					let newValue = newValue else {
-				return
-			}
-			self = .primeModal(newValue)
-		}
-	}
-
 	var favoritePrimes: FavoritePrimesActions? {
 		get {
 			guard case let .favoritePrimes(value) = self else {
@@ -62,6 +35,22 @@ enum AppAction {
 				return
 			}
 			self = .favoritePrimes(newValue)
+		}
+	}
+
+	var counterView: CounterViewActions? {
+		get {
+			guard case let .counterView(value) = self else {
+				return nil
+			}
+			return value
+		}
+		set {
+			guard case .counterView = self,
+					let newValue = newValue else {
+				return
+			}
+			self = .counterView(newValue)
 		}
 	}
 }
