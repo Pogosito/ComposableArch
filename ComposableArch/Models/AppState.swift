@@ -18,6 +18,12 @@ struct AppState {
 
 	var activityFeed: [Activity] = []
 
+	var alertNthPrime: PrimeAlert? = nil
+
+	var isNthPrimeButtonDisabled: Bool = false
+
+	var isAlertShown: Bool = false
+
 	struct Activity {
 
 		let timestamp: Date
@@ -50,13 +56,19 @@ extension AppState {
 	var counterView: CounterViewState {
 		get {
 			CounterViewState(
+				alertNthPrime: alertNthPrime,
 				count: self.count,
-				favoritePrimes: self.favoritePrimes
+				favoritePrimes: self.favoritePrimes,
+				isNthPrimeButtonDisabled: isNthPrimeButtonDisabled,
+				isAlertShown: isAlertShown
 			)
 		}
 		set {
+			self.alertNthPrime = newValue.alertNthPrime
 			self.count = newValue.count
 			self.favoritePrimes = newValue.favoritePrimes
+			self.isNthPrimeButtonDisabled = newValue.isNthPrimeButtonDisabled
+			self.isAlertShown = newValue.isAlertShown
 		}
 	}
 }

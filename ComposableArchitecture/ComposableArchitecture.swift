@@ -8,25 +8,47 @@
 import SwiftUI
 import Combine
 
+public struct Effect<A> {
+
+	public let run: (@escaping (A) -> Void) -> Void
+
+	public init(run: @escaping (@escaping (A) -> Void) -> Void) {
+		self.run = run
+	}
+
+	public func map<B>(_ f: @escaping (A) -> B) -> Effect<B> {
+		Effect<B> { callback in
+			self.run { a in
+				callback(f(a))
+			}
+		}
+	}
+}
+
+public typealias Reducer<Value, Action> = (inout Value, Action) -> [Effect<Action>]
+
 // Мы не хотим, чтобы наш слой модели был зависим от фреймворков, поэтому в модели мы не используем обертки Combine
 // Но чтобы получить пользу от оберток Combine создаим вот такой дженерик класс
 // который может получить на вход любую модель и дейтсвие, которое нужно осущетсвить над моделью
 public final class Store<Value, Action>: ObservableObject {
 
-	private let reducer: (inout Value, Action) -> Void
+	private let reducer: Reducer<Value, Action>
 	@Published public private(set) var value: Value
 	private var cancellable: Cancellable?
 
 	public init(
 		initialValue: Value,
-		reducer: @escaping (inout Value, Action) -> Void
+		reducer: @escaping Reducer<Value, Action>
 	) {
 		self.value = initialValue
 		self.reducer = reducer
 	}
 
 	public func send(_ action: Action) {
-		reducer(&value, action)
+		let effects = reducer(&value, action)
+		effects.forEach { effect in
+			effect.run(self.send)
+		}
 	}
 
 	public func view<LocalValue, LocalAction>(
@@ -38,6 +60,7 @@ public final class Store<Value, Action>: ObservableObject {
 		) { localValue, localAction in
 			self.send(toGlobalAction(localAction))
 			localValue = toLocalValue(self.value)
+			return []
 		}
 		localStore.cancellable = $value.sink { [weak localStore] newValue in
 			localStore?.value = toLocalValue(newValue)
@@ -50,13 +73,11 @@ public final class Store<Value, Action>: ObservableObject {
 // поэтому сделаем вот такую функцию, чтобы можно
 // было разбить функцию reduce на кусочки
 public func combine<Value, Action>(
-	_ reducers: (inout Value, Action) -> Void...
-) -> (inout Value, Action) -> Void {
-
+	_ reducers: Reducer<Value, Action>...
+) -> Reducer<Value, Action> {
 	return { value, action in
-		for reducer in reducers {
-			reducer(&value, action)
-		}
+		let effects: [Effect] = reducers.flatMap { $0(&value, action) }
+		return effects
 	}
 }
 
@@ -69,81 +90,41 @@ public func pullback<
 	LocalAction,
 	GlobalAction
 >(
-	_ reducer: @escaping (inout LocalValue, LocalAction) -> Void,
+	_ reducer: @escaping Reducer<LocalValue, LocalAction>,
 	value: WritableKeyPath<GlobalValue, LocalValue>,
 	action: WritableKeyPath<GlobalAction, LocalAction?>
-) -> (inout GlobalValue, GlobalAction) -> Void {
+) -> Reducer<GlobalValue, GlobalAction> {
 	return { globalValue, globalAction in
-		guard let localAction = globalAction[keyPath: action] else { return }
-		reducer(
+		guard let localAction = globalAction[keyPath: action] else { return [] }
+		let localEffects = reducer(
 			&globalValue[keyPath: value],
 			localAction
 		)
+
+		return localEffects.map { localEffect in
+			Effect { callback in
+				localEffect.run { localAcion in
+					var globalAction = globalAction
+					globalAction[keyPath: action] = localAcion
+					callback(globalAction)
+				}
+			}
+		}
 	}
 }
-
+ 
 public func logging<Value, Action>(
-	_ reducer: @escaping (inout Value, Action) -> Void
-) -> (inout Value, Action) -> Void {
+	_ reducer: @escaping Reducer<Value, Action>
+) -> Reducer<Value, Action> {
 
 	return { value, action in
-		reducer(&value, action)
-		print("Action: \(action)")
-		print("Value:")
-		dump(value)
-		print("-----")
-	}
-}
-
-func filterActions<Value, Action>(
-	_ predicate: @escaping (Action) -> Bool
-) -> (@escaping (inout Value, Action) -> Void) -> (inout Value, Action) -> Void {
-
-	return { reducer in
-		return { value, action in
-			if predicate(action) {
-				reducer(&value, action)
-			}
-		}
-	}
-}
-
-struct UndoState<Value> {
-
-	var value: Value
-	var history: [Value]
-	var undone: [Value]
-	var canUndo: Bool { !history.isEmpty }
-	var canRedo: Bool { !undone.isEmpty }
-}
-
-enum UndoAction<Action> {
-	case action(Action)
-	case undo
-	case redo
-}
-
-func undo<Value, Action>(
-  _ reducer: @escaping (inout Value, Action) -> Void,
-  limit: Int
-) -> (inout UndoState<Value>, UndoAction<Action>) -> Void {
-	return { undoState, undoAction in
-		switch undoAction {
-		case let .action(action):
-			var currentValue = undoState.value
-			reducer(&currentValue, action)
-			undoState.history.append(currentValue)
-			if undoState.history.count > limit {
-				undoState.history.removeFirst()
-			}
-		case .undo:
-			guard undoState.canUndo else { return }
-			undoState.undone.append(undoState.value)
-			undoState.value = undoState.history.removeLast()
-		case .redo:
-			guard undoState.canRedo else { return }
-			undoState.history.append(undoState.value)
-			undoState.value = undoState.undone.removeFirst()
-		}
+		let effects = reducer(&value, action)
+		let newValue = value
+		return [Effect { _ in
+			print("Action: \(action)")
+			print("Value:")
+			dump(newValue)
+			print("-----")
+		}] + effects
 	}
 }

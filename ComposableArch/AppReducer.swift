@@ -11,7 +11,7 @@ import Counter
 import PrimeModal
 import FavoritePrimes
 
-let appReducer: (inout AppState, AppAction) -> Void = combine(
-	pullback(counterViewReducer, value: \.counterView, action: \.counterView),
-	pullback(favoritePrimesReducer, value: \.favoritePrimes, action: \.favoritePrimes)
+let appReducer = combine(
+	pullback(counterViewReducer, value: \AppState.counterView, action: \AppAction.counterView),
+	pullback(favoritePrimesReducer, value: \AppState.favoritePrimes, action: \AppAction.favoritePrimes)
 )

@@ -46,6 +46,7 @@
 		548AA2022B754C8600BD4BBF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 548AA2012B754C8600BD4BBF /* Assets.xcassets */; };
 		548AA2052B754C8600BD4BBF /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 548AA2042B754C8600BD4BBF /* Preview Assets.xcassets */; };
 		548AA20E2B75521D00BD4BBF /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 548AA20D2B75521D00BD4BBF /* AppState.swift */; };
+		54D8DA952C0E68570077D3A7 /* Effects.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54D8DA942C0E68570077D3A7 /* Effects.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -189,6 +190,7 @@
 		548AA2012B754C8600BD4BBF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		548AA2042B754C8600BD4BBF /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		548AA20D2B75521D00BD4BBF /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
+		54D8DA942C0E68570077D3A7 /* Effects.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Effects.swift; sourceTree = "<group>"; };
 		54E288272B8BB40200D470B4 /* MyPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = MyPlayground.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 /* End PBXFileReference section */
 
@@ -342,6 +344,7 @@
 			isa = PBXGroup;
 			children = (
 				5406E8522B7CAA6000394DF0 /* ComposableArchitecture.swift */,
+				54D8DA942C0E68570077D3A7 /* Effects.swift */,
 				5406E8372B7CAA4C00394DF0 /* ComposableArchitecture.h */,
 				5406E8382B7CAA4C00394DF0 /* ComposableArchitecture.docc */,
 			);
@@ -825,6 +828,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5406E8392B7CAA4C00394DF0 /* ComposableArchitecture.docc in Sources */,
+				54D8DA952C0E68570077D3A7 /* Effects.swift in Sources */,
 				5406E8532B7CAA6000394DF0 /* ComposableArchitecture.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

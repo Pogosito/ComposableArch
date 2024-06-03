@@ -17,7 +17,7 @@ import ComposableArchitecture
 
 enum AppAction {
 
-	case counterView(CounterViewActions)
+	case counterView(CounterViewAction)
 	case favoritePrimes(FavoritePrimesActions)
 
 	// Таким образом мы получаем доступ к ассоциативным значениям enum
@@ -38,7 +38,7 @@ enum AppAction {
 		}
 	}
 
-	var counterView: CounterViewActions? {
+	var counterView: CounterViewAction? {
 		get {
 			guard case let .counterView(value) = self else {
 				return nil

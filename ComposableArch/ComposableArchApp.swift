@@ -18,7 +18,7 @@ struct ComposableArchApp: App {
 					initialValue: AppState(),
 					// Не нравится вложенность использовали функцию with из их SDK,
 					// чтобы красиво разбить вложенность (пока не стал использовать)
-					reducer: logging(activivtyFeed(appReducer))
+					reducer: logging(activityFeed(appReducer))
 				)
 			)
 		}

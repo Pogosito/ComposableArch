@@ -9,24 +9,84 @@ import SwiftUI
 import ComposableArchitecture
 import PrimeModal
 
-public typealias CounterViewState = (count: Int, favoritePrimes: [Int])
+public struct CounterViewState {
+	public var alertNthPrime: PrimeAlert?
+	public var count: Int
+	public var favoritePrimes: [Int]
+	public var isNthPrimeButtonDisabled: Bool
+	public var isAlertShown: Bool
+
+	var counter: CounterState {
+		get { (self.alertNthPrime, self.count, self.isNthPrimeButtonDisabled, isAlertShown) }
+		set { (self.alertNthPrime, self.count, self.isNthPrimeButtonDisabled, isAlertShown) = newValue }
+	}
+
+	var primeModal: PrimeModalState {
+		get { (self.count, self.favoritePrimes) }
+		set { (self.count, self.favoritePrimes) = newValue }
+	}
+
+	public init(
+		alertNthPrime: PrimeAlert? = nil,
+		count: Int,
+		favoritePrimes: [Int],
+		isNthPrimeButtonDisabled: Bool,
+		isAlertShown: Bool = false
+	) {
+		self.alertNthPrime = alertNthPrime
+		self.count = count
+		self.favoritePrimes = favoritePrimes
+		self.isNthPrimeButtonDisabled = isNthPrimeButtonDisabled
+		self.isAlertShown = isAlertShown
+	}
+}
+
+public typealias CounterState = (
+	alertNthPrime: PrimeAlert?,
+	count: Int,
+	isNthPrimetButtonDisabled: Bool,
+	isAlertShown: Bool
+)
 
 public enum CounterAction {
 	case decrTapped
 	case incrTapped
+	case nthPrimeButtonTapped
+	case nthPrimeResponse(Int?)
+	case alertDismissButtonTapped
 }
 
 public func counterReducer(
-	state: inout Int,
+	state: inout CounterState,
 	action: CounterAction
-) {
+) -> [Effect<CounterAction>] {
 	switch action {
-	case .decrTapped: state -= 1
-	case .incrTapped: state += 1
+	case .decrTapped:
+		state.count -= 1
+		return []
+	case .incrTapped:
+		state.count += 1
+		return []
+	case .nthPrimeButtonTapped:
+		state.isNthPrimetButtonDisabled = true
+		return [
+			nthPrime(state.count)
+				.map { CounterAction.nthPrimeResponse($0) }
+				.recive(on: .main)
+		]
+	case let .nthPrimeResponse(prime):
+		state.alertNthPrime = prime.map(PrimeAlert.init(prime:))
+		state.isNthPrimetButtonDisabled = false
+		state.isAlertShown = true
+		return []
+	case .alertDismissButtonTapped:
+		state.isAlertShown = false
+		state.alertNthPrime = nil
+		return []
 	}
 }
 
-public enum CounterViewActions {
+public enum CounterViewAction {
 	case counter(CounterAction)
 	case primeModal(PrimeModalAction)
 
@@ -57,21 +117,24 @@ public enum CounterViewActions {
 	}
 }
 
-public var counterViewReducer: (inout CounterViewState, CounterViewActions) -> Void = combine(
-	pullback(counterReducer, value: \.count, action: \.counter),
-	pullback(primeModalReducer, value: \.self, action: \.primeModal)
+public let counterViewReducer = combine(
+	pullback(counterReducer, value: \CounterViewState.counter, action: \CounterViewAction.counter),
+	pullback(primeModalReducer, value: \.primeModal, action: \.primeModal)
 )
+
+public struct PrimeAlert: Identifiable {
+	let prime: Int
+	public var id: Int { self.prime }
+}
 
 public struct CounterView: View {
 
-	@ObservedObject var store: Store<CounterViewState, CounterViewActions>
+	@ObservedObject var store: Store<CounterViewState, CounterViewAction>
 
 	@State private var isPrimeModalShown: Bool = false
-	@State private var isAlertNthPrimeShowm: Bool = false
-	@State private var alertNthPrime: Int?
 
 	public init(
-		store: Store<CounterViewState, CounterViewActions>
+		store: Store<CounterViewState, CounterViewAction>
 	) {
 		self.store = store
 	}
@@ -100,15 +163,11 @@ public struct CounterView: View {
 				Text("Is this prime?")
 			})
 
-			Button(action: {
-				nthPrime(store.value.count) { prime in
-					alertNthPrime = prime
-					print("isAlertNthPrimeShowm:", isAlertNthPrimeShowm)
-					isAlertNthPrimeShowm = true
-				}
-			}, label: {
-				Text("What is the \(ordinal(store.value.count)) prime?")
-			})
+			Button(
+				"What is the \(ordinal(store.value.count)) prime?",
+				action: nthPrimeButtonAction
+			)
+			.disabled(self.store.value.isNthPrimeButtonDisabled)
 		}
 		.font(.title)
 		.navigationTitle("Counter demo")
@@ -127,19 +186,23 @@ public struct CounterView: View {
 		)
 		.alert(
 			"Warning",
-			isPresented: $isAlertNthPrimeShowm,
+			isPresented: .constant(store.value.isAlertShown),
 			actions: {
 				Button {
-					print(isAlertNthPrimeShowm)
+					store.send(.counter(.alertDismissButtonTapped))
 				} label: {
 					Text("Ok")
 				}
 			}
 		) {
 			Text(
-				"The \(ordinal(store.value.count)) prime is \(alertNthPrime ?? 0)"
+				"The \(ordinal(store.value.count)) prime is \(self.store.value.alertNthPrime?.prime ?? 0)"
 			)
 		}
+	}
+
+	func nthPrimeButtonAction() {
+		store.send(.counter(.nthPrimeButtonTapped))
 	}
 }
 
@@ -152,27 +215,24 @@ private extension CounterView {
 	}
 }
 
-func nthPrime(_ n: Int, callback: @escaping (Int?) -> Void) -> Void {
-	wolframAlpha(query: "prime \(n)") { result in
-		callback(
-			result
-				.flatMap {
-					$0.queryresult
-						.pods
-						.first(where: { $0.primary == .some(true)})?
-						.subpods
-						.first?
-						.plaintext
-			}
-			.flatMap(Int.init)
-		)
+func nthPrime(_ n: Int) -> Effect<Int?> {
+	return wolframAlpha(query: "prime \(n)").map { result in
+		result
+			.flatMap {
+				$0.queryresult
+					.pods
+					.first(where: { $0.primary == .some(true)})?
+					.subpods
+					.first?
+					.plaintext
+		}
+		.flatMap(Int.init)
 	}
 }
 
 func wolframAlpha(
-	query: String,
-	callback: @escaping (WolframAlphaResult?) -> Void
-) -> Void {
+	query: String
+) -> Effect<WolframAlphaResult?> {
 	var components = URLComponents(string: "https://api.wolframalpha.com/v2/query")!
 	components.queryItems = [
 		URLQueryItem(name: "input", value: query),
@@ -181,14 +241,11 @@ func wolframAlpha(
 		URLQueryItem(name: "appid", value: "A5EJY6-KYRV8GQQT4")
 	]
 
-	URLSession.shared.dataTask(
-		with: components.url(relativeTo: nil)!
-	) { data, response, error in
-		callback(
-			data.flatMap { try? JSONDecoder().decode(WolframAlphaResult.self, from: $0 )}
-		)
-	}.resume()
+	return dataTask(url: components.url(relativeTo: nil)!)
+		.decode(as: WolframAlphaResult.self)
 }
+
+
 
 struct WolframAlphaResult: Decodable {
 

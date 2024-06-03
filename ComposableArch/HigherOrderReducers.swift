@@ -6,17 +6,21 @@
 //
 
 import Foundation
+import ComposableArchitecture
 
 // Тут мы созадали high order reducer, который позволяет добавить
 // общую логику для определнных действий, чтобы не дублировать в
 // маленьких редьюсерах
-func activivtyFeed(
-	_ reducer: @escaping (inout AppState, AppAction) -> Void
-) -> (inout AppState, AppAction) -> Void {
+func activityFeed(
+	_ reducer: @escaping Reducer<AppState, AppAction>
+) -> Reducer<AppState, AppAction> {
 
 	return { state, action in
 		switch action {
-		case .counterView(.counter): break
+		case .counterView(.counter),
+				.favoritePrimes(.loadedFavoritePrimes),
+				.favoritePrimes(.saveButtonTapped),
+				.favoritePrimes(.loadButtonTapped): break
 		case .counterView(.primeModal(.removeFavoritePrimeTapped)):
 			state.activityFeed.append(
 				AppState.Activity(
@@ -44,6 +48,6 @@ func activivtyFeed(
 			}
 		}
 
-		reducer(&state, action)
+		return reducer(&state, action)
 	}
 }
