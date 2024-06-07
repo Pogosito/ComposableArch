@@ -7,6 +7,7 @@
 
 import SwiftUI
 import ComposableArchitecture
+import Combine
 
 public enum FavoritePrimesActions {
 	case deleteFavoritePrimes(IndexSet)
@@ -31,12 +32,25 @@ public func favoritePrimesReducer(
 	case .saveButtonTapped:
 		return [saveEffect(favoritePrimes: state)]
 	case .loadButtonTapped:
-		return [loadEffect()]
+		return [
+			loadEffect()
+				.compactMap { $0 }
+				.eraseToEffect()
+		]
+	}
+}
+
+extension Effect {
+
+	static func sync(work: @escaping () -> Output) -> Effect {
+		return Deferred {
+			Just(work())
+		}.eraseToEffect()
 	}
 }
 
 private func saveEffect(favoritePrimes: [Int]) -> Effect<FavoritePrimesActions> {
-	Effect { _ in
+	.fireAndForget {
 		let data = try! JSONEncoder().encode(favoritePrimes)
 		let documentPath = NSSearchPathForDirectoriesInDomains(
 			.documentDirectory,
@@ -49,8 +63,8 @@ private func saveEffect(favoritePrimes: [Int]) -> Effect<FavoritePrimesActions> 
 	}
 }
 
-private func loadEffect() -> Effect<FavoritePrimesActions> {
-	Effect { callback in
+private func loadEffect() -> Effect<FavoritePrimesActions?> {
+	Effect<FavoritePrimesActions?>.sync {
 		let documentPath = NSSearchPathForDirectoriesInDomains(
 			.documentDirectory,
 			.userDomainMask,
@@ -61,8 +75,8 @@ private func loadEffect() -> Effect<FavoritePrimesActions> {
 		guard
 			let data = try? Data(contentsOf: favoritePrimesUrl),
 			let favoritePrimes = try? JSONDecoder().decode([Int].self, from: data)
-		else { return }
-		callback(.loadedFavoritePrimes(favoritePrimes))
+		else { return nil }
+		return .loadedFavoritePrimes(favoritePrimes)
 	}
 }
 

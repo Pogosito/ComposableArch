@@ -8,6 +8,7 @@
 import SwiftUI
 import ComposableArchitecture
 import PrimeModal
+import Combine
 
 public struct CounterViewState {
 	public var alertNthPrime: PrimeAlert?
@@ -72,7 +73,8 @@ public func counterReducer(
 		return [
 			nthPrime(state.count)
 				.map { CounterAction.nthPrimeResponse($0) }
-				.recive(on: .main)
+				.receive(on: DispatchQueue.main)
+				.eraseToEffect()
 		]
 	case let .nthPrimeResponse(prime):
 		state.alertNthPrime = prime.map(PrimeAlert.init(prime:))
@@ -228,6 +230,7 @@ func nthPrime(_ n: Int) -> Effect<Int?> {
 		}
 		.flatMap(Int.init)
 	}
+	.eraseToEffect()
 }
 
 func wolframAlpha(
@@ -241,8 +244,12 @@ func wolframAlpha(
 		URLQueryItem(name: "appid", value: "A5EJY6-KYRV8GQQT4")
 	]
 
-	return dataTask(url: components.url(relativeTo: nil)!)
-		.decode(as: WolframAlphaResult.self)
+	return URLSession.shared
+		.dataTaskPublisher(for: components.url!)
+		.map { data, _ in data }
+		.decode(type: WolframAlphaResult?.self, decoder: JSONDecoder())
+		.replaceError(with: nil)
+		.eraseToEffect()
 }
 
 
