@@ -648,28 +648,24 @@
 					};
 					5406E7D62B7CA9B700394DF0 = {
 						CreatedOnToolsVersion = 15.0.1;
-						TestTargetID = 548AA1F92B754C8500BD4BBF;
 					};
 					5406E7F02B7CA9DC00394DF0 = {
 						CreatedOnToolsVersion = 15.0.1;
 					};
 					5406E7F92B7CA9DC00394DF0 = {
 						CreatedOnToolsVersion = 15.0.1;
-						TestTargetID = 548AA1F92B754C8500BD4BBF;
 					};
 					5406E8122B7CA9F100394DF0 = {
 						CreatedOnToolsVersion = 15.0.1;
 					};
 					5406E81B2B7CA9F100394DF0 = {
 						CreatedOnToolsVersion = 15.0.1;
-						TestTargetID = 548AA1F92B754C8500BD4BBF;
 					};
 					5406E8342B7CAA4C00394DF0 = {
 						CreatedOnToolsVersion = 15.0.1;
 					};
 					5406E83D2B7CAA4C00394DF0 = {
 						CreatedOnToolsVersion = 15.0.1;
-						TestTargetID = 548AA1F92B754C8500BD4BBF;
 					};
 					548AA1F92B754C8500BD4BBF = {
 						CreatedOnToolsVersion = 15.0.1;
@@ -1002,7 +998,6 @@
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ComposableArch.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/ComposableArch";
 			};
 			name = Debug;
 		};
@@ -1020,7 +1015,6 @@
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ComposableArch.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/ComposableArch";
 			};
 			name = Release;
 		};
@@ -1104,7 +1098,6 @@
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ComposableArch.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/ComposableArch";
 			};
 			name = Debug;
 		};
@@ -1122,7 +1115,6 @@
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ComposableArch.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/ComposableArch";
 			};
 			name = Release;
 		};
@@ -1206,7 +1198,6 @@
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ComposableArch.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/ComposableArch";
 			};
 			name = Debug;
 		};
@@ -1224,7 +1215,6 @@
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ComposableArch.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/ComposableArch";
 			};
 			name = Release;
 		};
@@ -1308,7 +1298,6 @@
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ComposableArch.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/ComposableArch";
 			};
 			name = Debug;
 		};
@@ -1326,7 +1315,6 @@
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ComposableArch.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/ComposableArch";
 			};
 			name = Release;
 		};
