@@ -29,9 +29,9 @@ public struct CounterViewState: Equatable {
 
 	public init(
 		alertNthPrime: PrimeAlert? = nil,
-		count: Int,
-		favoritePrimes: [Int],
-		isNthPrimeButtonDisabled: Bool,
+		count: Int = 0,
+		favoritePrimes: [Int] = [],
+		isNthPrimeButtonDisabled: Bool = false,
 		isAlertShown: Bool = false
 	) {
 		self.alertNthPrime = alertNthPrime
@@ -49,12 +49,32 @@ public typealias CounterState = (
 	isAlertShown: Bool
 )
 
-public enum CounterAction {
+public enum CounterAction: Equatable {
 	case decrTapped
 	case incrTapped
 	case nthPrimeButtonTapped
 	case nthPrimeResponse(Int?)
 	case alertDismissButtonTapped
+}
+
+struct CounterEnvironment {
+	var nthPrime: (Int) -> Effect<Int?>
+}
+
+extension CounterEnvironment {
+	static let live = CounterEnvironment(nthPrime: Counter.nthPrime)
+}
+
+var Current = CounterEnvironment.live
+
+extension CounterEnvironment {
+	static let mock = CounterEnvironment(
+		nthPrime: { _ in
+			Effect<Int?>.sync {
+				17
+			}
+		}
+	)
 }
 
 public func counterReducer(
@@ -71,7 +91,7 @@ public func counterReducer(
 	case .nthPrimeButtonTapped:
 		state.isNthPrimetButtonDisabled = true
 		return [
-			nthPrime(state.count)
+			Current.nthPrime(state.count)
 				.map { CounterAction.nthPrimeResponse($0) }
 				.receive(on: DispatchQueue.main)
 				.eraseToEffect()
@@ -88,7 +108,7 @@ public func counterReducer(
 	}
 }
 
-public enum CounterViewAction {
+public enum CounterViewAction: Equatable {
 	case counter(CounterAction)
 	case primeModal(PrimeModalAction)
 

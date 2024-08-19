@@ -47,6 +47,7 @@
 		548AA2052B754C8600BD4BBF /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 548AA2042B754C8600BD4BBF /* Preview Assets.xcassets */; };
 		548AA20E2B75521D00BD4BBF /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 548AA20D2B75521D00BD4BBF /* AppState.swift */; };
 		54D8DA952C0E68570077D3A7 /* Effects.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54D8DA942C0E68570077D3A7 /* Effects.swift */; };
+		54E8B1E12C5A862300231AAC /* ComposableArchitectureTestSupport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54E8B1E02C5A861800231AAC /* ComposableArchitectureTestSupport.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -192,6 +193,8 @@
 		548AA20D2B75521D00BD4BBF /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 		54D8DA942C0E68570077D3A7 /* Effects.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Effects.swift; sourceTree = "<group>"; };
 		54E288272B8BB40200D470B4 /* MyPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = MyPlayground.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		54E8B1E02C5A861800231AAC /* ComposableArchitectureTestSupport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposableArchitectureTestSupport.swift; sourceTree = "<group>"; };
+		54F40BCF2C48072D00E84D27 /* Favorite Primes.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = "Favorite Primes.playground"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -300,6 +303,7 @@
 			isa = PBXGroup;
 			children = (
 				5406E7DE2B7CA9B700394DF0 /* CounterTests.swift */,
+				54E8B1E02C5A861800231AAC /* ComposableArchitectureTestSupport.swift */,
 			);
 			path = CounterTests;
 			sourceTree = "<group>";
@@ -362,6 +366,7 @@
 		548AA1F12B754C8500BD4BBF = {
 			isa = PBXGroup;
 			children = (
+				54F40BCF2C48072D00E84D27 /* Favorite Primes.playground */,
 				54E288272B8BB40200D470B4 /* MyPlayground.playground */,
 				5406E7C72B7C9E7E00394DF0 /* DEFENITIONS.md */,
 				548AA1FC2B754C8500BD4BBF /* ComposableArch */,
@@ -782,6 +787,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5406E7DF2B7CA9B700394DF0 /* CounterTests.swift in Sources */,
+				54E8B1E12C5A862300231AAC /* ComposableArchitectureTestSupport.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

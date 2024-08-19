@@ -28,6 +28,15 @@ extension Publisher where Failure == Never {
 	}
 }
 
+extension Effect {
+
+	public static func sync(work: @escaping () -> Output) -> Effect {
+		return Deferred {
+			Just(work())
+		}.eraseToEffect()
+	}
+}
+
 public typealias Reducer<Value, Action> = (inout Value, Action) -> [Effect<Action>]
 
 // Мы не хотим, чтобы наш слой модели был зависим от фреймворков, поэтому в модели мы не используем обертки Combine
