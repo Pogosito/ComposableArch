@@ -45,12 +45,3 @@ struct ContentView: View {
 		}
 	}
 }
-
-#Preview {
-	ContentView(
-		store: .init(
-			initialValue: AppState(),
-			reducer: appReducer
-		)
-	)
-}

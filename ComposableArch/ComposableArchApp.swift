@@ -7,6 +7,8 @@
 
 import SwiftUI
 import ComposableArchitecture
+import Counter
+import FavoritePrimes
 
 @main
 struct ComposableArchApp: App {
@@ -18,7 +20,11 @@ struct ComposableArchApp: App {
 					initialValue: AppState(),
 					// Не нравится вложенность использовали функцию with из их SDK,
 					// чтобы красиво разбить вложенность (пока не стал использовать)
-					reducer: logging(activityFeed(appReducer))
+					reducer: logging(activityFeed(appReducer)),
+					environment: AppEnvironment(
+						fileClient: .live,
+						nthPrimeEffect: Counter.nthPrime
+					)
 				)
 			)
 		}

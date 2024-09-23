@@ -41,6 +41,9 @@
 		5406E8572B7E308300394DF0 /* PrimeModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5406E8562B7E308300394DF0 /* PrimeModal.swift */; };
 		5406E8592B7E315700394DF0 /* FavoritePrimes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5406E8582B7E315700394DF0 /* FavoritePrimes.swift */; };
 		5406E85B2B7E31CF00394DF0 /* FavoritePrimesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5406E8232B7CA9F100394DF0 /* FavoritePrimesTests.swift */; };
+		5439169B2CA1571000077BF7 /* FavoritePrimesPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5439169A2CA156EF00077BF7 /* FavoritePrimesPreview.swift */; };
+		5439169E2CA1598700077BF7 /* CounterPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5439169C2CA1584800077BF7 /* CounterPreview.swift */; };
+		543916A12CA15B6000077BF7 /* AppEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 543916A02CA15B6000077BF7 /* AppEnvironment.swift */; };
 		548AA1FE2B754C8500BD4BBF /* ComposableArchApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 548AA1FD2B754C8500BD4BBF /* ComposableArchApp.swift */; };
 		548AA2002B754C8500BD4BBF /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 548AA1FF2B754C8500BD4BBF /* ContentView.swift */; };
 		548AA2022B754C8600BD4BBF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 548AA2012B754C8600BD4BBF /* Assets.xcassets */; };
@@ -185,6 +188,9 @@
 		5406E8542B7E301E00394DF0 /* Counter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Counter.swift; sourceTree = "<group>"; };
 		5406E8562B7E308300394DF0 /* PrimeModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrimeModal.swift; sourceTree = "<group>"; };
 		5406E8582B7E315700394DF0 /* FavoritePrimes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritePrimes.swift; sourceTree = "<group>"; };
+		5439169A2CA156EF00077BF7 /* FavoritePrimesPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritePrimesPreview.swift; sourceTree = "<group>"; };
+		5439169C2CA1584800077BF7 /* CounterPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CounterPreview.swift; sourceTree = "<group>"; };
+		543916A02CA15B6000077BF7 /* AppEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppEnvironment.swift; sourceTree = "<group>"; };
 		548AA1FA2B754C8500BD4BBF /* ComposableArch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ComposableArch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		548AA1FD2B754C8500BD4BBF /* ComposableArchApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposableArchApp.swift; sourceTree = "<group>"; };
 		548AA1FF2B754C8500BD4BBF /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -192,9 +198,7 @@
 		548AA2042B754C8600BD4BBF /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		548AA20D2B75521D00BD4BBF /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 		54D8DA942C0E68570077D3A7 /* Effects.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Effects.swift; sourceTree = "<group>"; };
-		54E288272B8BB40200D470B4 /* MyPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = MyPlayground.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		54E8B1E02C5A861800231AAC /* ComposableArchitectureTestSupport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposableArchitectureTestSupport.swift; sourceTree = "<group>"; };
-		54F40BCF2C48072D00E84D27 /* Favorite Primes.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = "Favorite Primes.playground"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -281,18 +285,11 @@
 			path = Network;
 			sourceTree = "<group>";
 		};
-		5406E7B12B7752BB00394DF0 /* Models */ = {
-			isa = PBXGroup;
-			children = (
-				548AA20D2B75521D00BD4BBF /* AppState.swift */,
-			);
-			path = Models;
-			sourceTree = "<group>";
-		};
 		5406E7CF2B7CA9B700394DF0 /* Counter */ = {
 			isa = PBXGroup;
 			children = (
 				5406E7D02B7CA9B700394DF0 /* Counter.h */,
+				5439169C2CA1584800077BF7 /* CounterPreview.swift */,
 				5406E8542B7E301E00394DF0 /* Counter.swift */,
 				5406E7D12B7CA9B700394DF0 /* Counter.docc */,
 			);
@@ -329,6 +326,7 @@
 		5406E8142B7CA9F100394DF0 /* FavoritePrimes */ = {
 			isa = PBXGroup;
 			children = (
+				5439169A2CA156EF00077BF7 /* FavoritePrimesPreview.swift */,
 				5406E8582B7E315700394DF0 /* FavoritePrimes.swift */,
 				5406E8152B7CA9F100394DF0 /* FavoritePrimes.h */,
 				5406E8162B7CA9F100394DF0 /* FavoritePrimes.docc */,
@@ -363,11 +361,20 @@
 			path = ComposableArchitectureTests;
 			sourceTree = "<group>";
 		};
+		5439169F2CA15B4C00077BF7 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				548AA20D2B75521D00BD4BBF /* AppState.swift */,
+				5406E7BA2B7920F900394DF0 /* AppAction.swift */,
+				5406E7B72B79144F00394DF0 /* AppReducer.swift */,
+				543916A02CA15B6000077BF7 /* AppEnvironment.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
 		548AA1F12B754C8500BD4BBF = {
 			isa = PBXGroup;
 			children = (
-				54F40BCF2C48072D00E84D27 /* Favorite Primes.playground */,
-				54E288272B8BB40200D470B4 /* MyPlayground.playground */,
 				5406E7C72B7C9E7E00394DF0 /* DEFENITIONS.md */,
 				548AA1FC2B754C8500BD4BBF /* ComposableArch */,
 				5406E7CF2B7CA9B700394DF0 /* Counter */,
@@ -402,12 +409,10 @@
 			isa = PBXGroup;
 			children = (
 				548AA1FD2B754C8500BD4BBF /* ComposableArchApp.swift */,
-				5406E7BA2B7920F900394DF0 /* AppAction.swift */,
-				5406E7C02B7BBB1800394DF0 /* HigherOrderReducers.swift */,
-				5406E7B72B79144F00394DF0 /* AppReducer.swift */,
+				5439169F2CA15B4C00077BF7 /* App */,
 				5406E7AE2B77527400394DF0 /* Network */,
-				5406E7B12B7752BB00394DF0 /* Models */,
 				548AA20F2B756A0200BD4BBF /* Views */,
+				5406E7C02B7BBB1800394DF0 /* HigherOrderReducers.swift */,
 				548AA2012B754C8600BD4BBF /* Assets.xcassets */,
 				548AA2032B754C8600BD4BBF /* Preview Content */,
 			);
@@ -777,6 +782,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5439169E2CA1598700077BF7 /* CounterPreview.swift in Sources */,
 				5406E8552B7E301E00394DF0 /* Counter.swift in Sources */,
 				5406E7D22B7CA9B700394DF0 /* Counter.docc in Sources */,
 			);
@@ -814,6 +820,7 @@
 			files = (
 				5406E8172B7CA9F100394DF0 /* FavoritePrimes.docc in Sources */,
 				5406E8592B7E315700394DF0 /* FavoritePrimes.swift in Sources */,
+				5439169B2CA1571000077BF7 /* FavoritePrimesPreview.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -850,6 +857,7 @@
 				5406E7B32B7752D100394DF0 /* WolframAlphaResult.swift in Sources */,
 				548AA2002B754C8500BD4BBF /* ContentView.swift in Sources */,
 				548AA1FE2B754C8500BD4BBF /* ComposableArchApp.swift in Sources */,
+				543916A12CA15B6000077BF7 /* AppEnvironment.swift in Sources */,
 				5406E7C12B7BBB1800394DF0 /* HigherOrderReducers.swift in Sources */,
 				5406E7B02B77528300394DF0 /* Queries.swift in Sources */,
 				5406E7BB2B7920F900394DF0 /* AppAction.swift in Sources */,

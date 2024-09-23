@@ -17,7 +17,8 @@ public enum PrimeModalAction: Equatable {
 
 public func primeModalReducer(
 	state: inout PrimeModalState,
-	action: PrimeModalAction
+	action: PrimeModalAction,
+	environment: Void
 ) -> [Effect<PrimeModalAction>] {
 	switch action {
 	case .saveFavoritePrimeTapped:

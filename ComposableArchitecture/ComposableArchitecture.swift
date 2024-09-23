@@ -8,57 +8,34 @@
 import SwiftUI
 import Combine
 
-public struct Effect<Output>: Publisher {
 
-	public typealias Failure = Never
-
-	let publisher: AnyPublisher<Output, Failure>
-
-	public func receive<S>(
-		subscriber: S
-	) where S: Subscriber, Never == S.Failure, Output == S.Input {
-		publisher.receive(subscriber: subscriber)
-	}
-}
-
-extension Publisher where Failure == Never {
-
-	public func eraseToEffect() -> Effect<Output> {
-		Effect(publisher: self.eraseToAnyPublisher())
-	}
-}
-
-extension Effect {
-
-	public static func sync(work: @escaping () -> Output) -> Effect {
-		return Deferred {
-			Just(work())
-		}.eraseToEffect()
-	}
-}
-
-public typealias Reducer<Value, Action> = (inout Value, Action) -> [Effect<Action>]
+public typealias Reducer<Value, Action, Environment> = (inout Value, Action, Environment) -> [Effect<Action>]
 
 // Мы не хотим, чтобы наш слой модели был зависим от фреймворков, поэтому в модели мы не используем обертки Combine
 // Но чтобы получить пользу от оберток Combine создаим вот такой дженерик класс
 // который может получить на вход любую модель и дейтсвие, которое нужно осущетсвить над моделью
 public final class Store<Value, Action>: ObservableObject {
 
-	private let reducer: Reducer<Value, Action>
+    private let reducer: Reducer<Value, Action, Any>
+	private var environment: Any?
 	@Published public private(set) var value: Value
 	private var viewCancellable: Cancellable?
 	private var effectCancellables: Set<AnyCancellable> = []
 
-	public init(
+	public init<Environment>(
 		initialValue: Value,
-		reducer: @escaping Reducer<Value, Action>
+		reducer: @escaping Reducer<Value, Action, Environment>,
+		environment: Environment
 	) {
+		self.reducer = { value, action, environment in
+			reducer(&value, action, environment as! Environment)
+		}
 		self.value = initialValue
-		self.reducer = reducer
+		self.environment = environment
 	}
 
 	public func send(_ action: Action) {
-		let effects = reducer(&value, action)
+		let effects = reducer(&value, action, environment)
 		effects.forEach { effect in
 			var effectCancellable: AnyCancellable?
 			var didComplete = false
@@ -80,12 +57,14 @@ public final class Store<Value, Action>: ObservableObject {
 		action toGlobalAction: @escaping (LocalAction) -> Action
 	) -> Store<LocalValue, LocalAction> {
 		let localStore = Store<LocalValue, LocalAction>(
-			initialValue: toLocalValue(value)
-		) { localValue, localAction in
-			self.send(toGlobalAction(localAction))
-			localValue = toLocalValue(self.value)
-			return []
-		}
+			initialValue: toLocalValue(value),
+			reducer: { localValue, localAction, _ in
+				self.send(toGlobalAction(localAction))
+				localValue = toLocalValue(self.value)
+				return []
+			},
+			environment: self.environment
+		)
 		localStore.viewCancellable = $value.sink { [weak localStore] newValue in
 			localStore?.value = toLocalValue(newValue)
 		}
@@ -96,11 +75,11 @@ public final class Store<Value, Action>: ObservableObject {
 // Наш reducer будет большим если все засовывать в один метод,
 // поэтому сделаем вот такую функцию, чтобы можно
 // было разбить функцию reduce на кусочки
-public func combine<Value, Action>(
-	_ reducers: Reducer<Value, Action>...
-) -> Reducer<Value, Action> {
-	return { value, action in
-		let effects: [Effect] = reducers.flatMap { $0(&value, action) }
+public func combine<Value, Action, Environment>(
+    _ reducers: Reducer<Value, Action, Environment>...
+) -> Reducer<Value, Action, Environment> {
+	return { value, action, environment in
+		let effects: [Effect] = reducers.flatMap { $0(&value, action, environment) }
 		return effects
 	}
 }
@@ -112,17 +91,21 @@ public func pullback<
 	LocalValue,
 	GlobalValue,
 	LocalAction,
-	GlobalAction
+	GlobalAction,
+    LocalEnvironment,
+    GlobalEnvironment
 >(
-	_ reducer: @escaping Reducer<LocalValue, LocalAction>,
+	_ reducer: @escaping Reducer<LocalValue, LocalAction, LocalEnvironment>,
 	value: WritableKeyPath<GlobalValue, LocalValue>,
-	action: WritableKeyPath<GlobalAction, LocalAction?>
-) -> Reducer<GlobalValue, GlobalAction> {
-	return { globalValue, globalAction in
+	action: WritableKeyPath<GlobalAction, LocalAction?>,
+    environment: @escaping (GlobalEnvironment) -> LocalEnvironment
+) -> Reducer<GlobalValue, GlobalAction, GlobalEnvironment> {
+	return { globalValue, globalAction, globalEnvironment in
 		guard let localAction = globalAction[keyPath: action] else { return [] }
 		let localEffects = reducer(
 			&globalValue[keyPath: value],
-			localAction
+			localAction,
+            environment(globalEnvironment)
 		)
 
 		return localEffects.map { localEffect in
@@ -135,12 +118,12 @@ public func pullback<
 	}
 }
 
-public func logging<Value, Action>(
-	_ reducer: @escaping Reducer<Value, Action>
-) -> Reducer<Value, Action> {
+public func logging<Value, Action, Environment>(
+	_ reducer: @escaping Reducer<Value, Action, Environment>
+) -> Reducer<Value, Action, Environment> {
 
-	return { value, action in
-		let effects = reducer(&value, action)
+	return { value, action, environment in
+		let effects = reducer(&value, action, environment)
 		let newValue = value
 		return [
 			.fireAndForget {

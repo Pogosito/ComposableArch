@@ -57,29 +57,13 @@ public enum CounterAction: Equatable {
 	case alertDismissButtonTapped
 }
 
-struct CounterEnvironment {
-	var nthPrime: (Int) -> Effect<Int?>
-}
+public typealias CounterEnvironment = (Int) -> Effect<Int?>
 
-extension CounterEnvironment {
-	static let live = CounterEnvironment(nthPrime: Counter.nthPrime)
-}
-
-var Current = CounterEnvironment.live
-
-extension CounterEnvironment {
-	static let mock = CounterEnvironment(
-		nthPrime: { _ in
-			Effect<Int?>.sync {
-				17
-			}
-		}
-	)
-}
 
 public func counterReducer(
 	state: inout CounterState,
-	action: CounterAction
+	action: CounterAction,
+	environment: CounterEnvironment
 ) -> [Effect<CounterAction>] {
 	switch action {
 	case .decrTapped:
@@ -91,7 +75,7 @@ public func counterReducer(
 	case .nthPrimeButtonTapped:
 		state.isNthPrimetButtonDisabled = true
 		return [
-			Current.nthPrime(state.count)
+			environment(state.count)
 				.map { CounterAction.nthPrimeResponse($0) }
 				.receive(on: DispatchQueue.main)
 				.eraseToEffect()
@@ -139,9 +123,23 @@ public enum CounterViewAction: Equatable {
 	}
 }
 
-public let counterViewReducer = combine(
-	pullback(counterReducer, value: \CounterViewState.counter, action: \CounterViewAction.counter),
-	pullback(primeModalReducer, value: \.primeModal, action: \.primeModal)
+public let counterViewReducer: Reducer<
+	CounterViewState,
+	CounterViewAction,
+	CounterEnvironment
+> = combine(
+	pullback(
+		counterReducer,
+		value: \CounterViewState.counter,
+		action: \CounterViewAction.counter,
+		environment: { $0 }
+	),
+	pullback(
+		primeModalReducer,
+		value: \.primeModal,
+		action: \.primeModal,
+		environment: { _ in }
+	)
 )
 
 public struct PrimeAlert: Identifiable, Equatable {
@@ -237,7 +235,7 @@ private extension CounterView {
 	}
 }
 
-func nthPrime(_ n: Int) -> Effect<Int?> {
+public func nthPrime(_ n: Int) -> Effect<Int?> {
 	return wolframAlpha(query: "prime \(n)").map { result in
 		result
 			.flatMap {

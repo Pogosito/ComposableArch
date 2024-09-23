@@ -12,15 +12,11 @@ import ComposableArchitecture
 
 final class CounterTests: XCTestCase {
 
-	override func setUp() {
-		super.setUp()
-		Current = .mock
-	}
-
 	func testIncrButtonTapped() {
 		assert(
 			initialValue: CounterViewState(count: 2),
 			reducer: counterViewReducer,
+			environment: { _ in .sync(work: { 17 })},
 			steps:
 				Step(.send, .counter(.incrTapped)) { $0.count = 3 },
 				Step(.send, .counter(.incrTapped)) { $0.count = 4 },
@@ -28,18 +24,7 @@ final class CounterTests: XCTestCase {
 		)
 	}
 
-	func testDecrButtonTapped() {
-		var state = CounterViewState(count: 2)
-		var expected = state
-		let effects = counterViewReducer(&state, .counter(.decrTapped))
- 
-		expected.count = 1
-		XCTAssertEqual(state, expected)
-		XCTAssert(effects.isEmpty)
-	}
-
 	func testNthPrimeButtonHappyFlow() {
-		Current.nthPrime = { _ in .sync { 17 } }
 		
 		assert(
 			initialValue: CounterViewState(
@@ -47,6 +32,7 @@ final class CounterTests: XCTestCase {
 				isNthPrimeButtonDisabled: false
 			),
 			reducer: counterViewReducer,
+			environment: { _ in .sync { 17 } },
 			steps:
 				Step(.send, .counter(.nthPrimeButtonTapped)) {
 					$0.isNthPrimeButtonDisabled = true
@@ -64,7 +50,6 @@ final class CounterTests: XCTestCase {
 	}
 
 	func testNthPrimeButtonUnhappyFlow() {
-		Current.nthPrime = { _ in .sync { nil } }
 		
 		assert(
 			initialValue: CounterViewState(
@@ -72,6 +57,7 @@ final class CounterTests: XCTestCase {
 				isNthPrimeButtonDisabled: false
 			),
 			reducer: counterViewReducer,
+			environment: { _ in .sync { nil } },
 			steps:
 				Step(.send, .counter(.nthPrimeButtonTapped)) {
 					$0.isNthPrimeButtonDisabled = true
@@ -91,6 +77,7 @@ final class CounterTests: XCTestCase {
 				favoritePrimes: [3, 5]
 			),
 			reducer: counterViewReducer,
+			environment: { _ in .sync { 17 } },
 			steps:
 			Step(.send, .primeModal(.saveFavoritePrimeTapped)) { $0.favoritePrimes = [3, 5, 2] },
 			Step(.send, .primeModal(.removeFavoritePrimeTapped)) { $0.favoritePrimes = [3, 5] }

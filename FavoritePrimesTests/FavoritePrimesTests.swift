@@ -10,16 +10,12 @@ import XCTest
  
 final class FavoritePrimesTests: XCTestCase {
 
-	override func setUp() {
-		super.setUp()
-		Current = .mock
-	}
-
 	func testDeleteFavoritePrimes() {
 		var state = [2, 3, 5, 7]
 		let effects = favoritePrimesReducer(
 			state: &state,
-			action: .deleteFavoritePrimes([2])
+			action: .deleteFavoritePrimes([2]),
+			environment: .mock
 		)
 
 		XCTAssertEqual(state, [2, 3, 7])
@@ -28,7 +24,8 @@ final class FavoritePrimesTests: XCTestCase {
 
 	func testSaveButtonTapped() {
 		var didSave = false
-		Current.fileClient.save = { _, _ in
+		var environment = FileClient.mock
+		environment.save = { _, _ in
 			.fireAndForget {
 				didSave = true
 			}
@@ -36,7 +33,8 @@ final class FavoritePrimesTests: XCTestCase {
 		var state = [2, 3, 5, 7]
 		let effects = favoritePrimesReducer(
 			state: &state ,
-			action: .saveButtonTapped
+			action: .saveButtonTapped,
+			environment: environment
 		)
 
 		XCTAssertEqual(state, [2, 3, 5, 7])
@@ -48,7 +46,8 @@ final class FavoritePrimesTests: XCTestCase {
 	}
 
 	func testLoadFavoritePrimesFlow() {
-		Current.fileClient.load = { _ in
+		var environment = FileClient.mock
+		environment.load = { _ in
 			.sync {
 				try! JSONEncoder().encode([2, 31])
 			}
@@ -57,7 +56,8 @@ final class FavoritePrimesTests: XCTestCase {
 		var state = [2, 3, 5, 7]
 		var effects = favoritePrimesReducer(
 			state: &state ,
-			action: .loadButtonTapped
+			action: .loadButtonTapped,
+			environment: environment
 		)
 
 		XCTAssertEqual(state, [2, 3, 5, 7])
@@ -77,7 +77,8 @@ final class FavoritePrimesTests: XCTestCase {
 
 		effects = favoritePrimesReducer(
 			state: &state,
-			action: nextAction
+			action: nextAction,
+			environment: environment
 		)
 
 		XCTAssertEqual(state, [2, 31])
